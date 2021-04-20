@@ -8,18 +8,35 @@ namespace SETTINGS
 {
     class Settings
     {
-
         public class Rootobject
         {
             public string version { get; set; }
-            public Games games { get; set; }
+            public List<Game> games { get; set; }
+            public List<Mods> mods { get; set; }
         }
 
-        public class Games
+        public class Game
         {
-            public object[] name { get; set; }
-            public object[] path { get; set; }
+            public string name { get; set; }
+            public string path { get; set; }
+
+            public Game(string name, string path)
+            {
+                this.name = name;
+                this.path = path;
+            }
         }
 
+        public class Mods
+        {
+            public string name { get; set; }
+            public string path { get; set; }
+
+            public Mods(string name, string path)
+            {
+                this.name = name;
+                this.path = path;
+            }
+        }
     }
 }

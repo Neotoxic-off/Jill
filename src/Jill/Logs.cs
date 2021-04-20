@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LOGS
 {
@@ -6,6 +7,7 @@ namespace LOGS
     {
         public string ids(string id)
         {
+            Console.WriteLine(id);
             Dictionary<string, string> list = new Dictionary<string, string>()
             {
                 { "ready", "Ready" },
@@ -33,6 +35,21 @@ namespace LOGS
 
                 { "games_load", "Games loading" },
                 { "games_loaded", "Games loaded" },
+                { "games_add", "Game adding" },
+                { "games_added", "Game added" },
+                { "games_refresh", "Games refreshing" },
+                { "games_refreshed", "Games refreshed" },
+
+                { "mods_add", "Mods adding" },
+                { "mods_added", "Mods added" },
+                { "mods_refresh", "Mods refreshing" },
+                { "mods_refreshed", "Mods refreshed" },
+
+                { "no_game_path_load", "No game path to load" },
+                { "no_game_name_load", "No game name to load" },
+
+                { "no_mod_path_load", "No mod path to load" },
+                { "no_mod_name_load", "No mod name to load" }
             };
 
             return (list[id]);

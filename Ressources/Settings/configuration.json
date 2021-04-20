@@ -1,12 +1,5 @@
 {
-    "version" : "0.0.1",
-    "games" : {
-        "name" : [
-            "this is a random game"
-        ],
-        "path" : [
-            "this is a random path"
-        ]
-    }
+    "version": "0.0.1",
+    "games": [],
+    "mods": []
 }
-

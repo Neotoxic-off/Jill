@@ -52,19 +52,47 @@ namespace Jill
                 Application.Exit();
             }
 
+            if (type == "game error")
+            {
+                MessageBox.Show(content, type, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (type == "mod error")
+            {
+                MessageBox.Show(content, type, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             return (Task.CompletedTask);
         }
 
         private Task load_mods()
         {
-            string[] mods = Directory.GetDirectories(ids.ids("mods"));
-            int count = mods.Length;
+            UILogs("mods_refresh", null).Wait();
 
-            mod = new Mod.Rootobject();
-            for (int i = 0; i < count; i++)
+            mods_list.Items.Clear();
+
+            if (loaded == true)
             {
-                mods_list.Items.Add(mods[i].Split('\\')[1]);
+                if (settings.mods.Count > 0)
+                {
+                    for (int i = 0; i < settings.mods.Count; i++)
+                    {
+                        if (Directory.Exists($"{settings.mods[i].path}") == true)
+                        {
+                            mods_list.Items.Add(settings.mods[i].name);
+                        }
+                        else
+                        {
+                            boxer($"Mods path not found:\n\nName: '{settings.mods[i].name}'\nPath: '{settings.mods[i].path}'", "mod error").Wait();
+                        }
+                    }
+                }
+                else
+                {
+                    UILogs("no_mod_name_load", null).Wait();
+                }
             }
+            UILogs("mods_refreshed", null).Wait();
 
             return (Task.CompletedTask);
         }
@@ -81,16 +109,19 @@ namespace Jill
 
         private Task load_modinfos(string path)
         {
+            string full_path = $"{path}\\{ids.ids("modinfo")}";
+            mod = new Mod.Rootobject();
+
             infos.Items.Clear();
 
             if (mods_list.SelectedIndex > -1)
             {
-                if (File.Exists($"{path}\\{ids.ids("modinfo")}") == true)
+                if (File.Exists(full_path) == true)
                 {
-                    UILogs("ini_load", $"{path}\\{ids.ids("modinfo")}").Wait();
+                    UILogs("ini_load", full_path).Wait();
                     FileIniDataParser parser = new FileIniDataParser();
-                    IniData data = parser.ReadFile($"{path}\\{ids.ids("modinfo")}");
-                    UILogs("ini_loaded", $"{path}\\{ids.ids("modinfo")}").Wait();
+                    IniData data = parser.ReadFile(full_path);
+                    UILogs("ini_loaded", full_path).Wait();
 
                     UILogs("infos_load", path).Wait();
 
@@ -116,7 +147,10 @@ namespace Jill
             
             return (Task.CompletedTask);
         }
-
+        private Task load_gameinfos()
+        {
+            return (Task.CompletedTask);
+        }
         private Task add_value(string value, string type)
         {
             if (value == null)
@@ -142,12 +176,11 @@ namespace Jill
 
             return (Task.CompletedTask);
         }
-
-        private void mods_list_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void mods_list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            load_modinfos($"{ids.ids("mods")}\\{mods_list.SelectedItem}");
+            if (mods_list.SelectedIndex > -1)
+                load_modinfos($"{settings.mods[mods_list.SelectedIndex].path}");
         }
-
         private void check_all_Click(object sender, EventArgs e)
         {
             UILogs("check_all_load", null).Wait();
@@ -157,7 +190,6 @@ namespace Jill
             }
             UILogs("check_all_loaded", null).Wait();
         }
-
         private void uncheck_all_Click(object sender, EventArgs e)
         {
             UILogs("uncheck_all_load", null).Wait();
@@ -167,18 +199,17 @@ namespace Jill
             }
             UILogs("uncheck_all_loaded", null).Wait();
         }
-
         private void preview_Click(object sender, EventArgs e)
         {
-            Preview preview = new Preview($"{ids.ids("mods")}\\{mods_list.SelectedItem}\\{mod.screenshot}");
+            Preview preview = new Preview($"{settings.mods[mods_list.SelectedIndex].path}\\{mod.screenshot}");
             UILogs("preview_load", null);
             preview.ShowDialog();
             preview.Dispose();
             UILogs("preview_loaded", null);
         }
-
         private Task load_settings()
         {
+            UILogs("settings_load", null).Wait();
             settings = new Settings.Rootobject();
 
             if (Directory.Exists(ids.ids("settings")) == true)
@@ -195,38 +226,89 @@ namespace Jill
             {
                 boxer($"Directory '{ids.ids("settings")}' not found", "error").Wait();
             }
+            UILogs("settings_loaded", null).Wait();
 
             return (Task.CompletedTask);
         }
         private Task load_games()
         {
+            UILogs("games_refresh", null).Wait();
+            games_list.Items.Clear();
+
             if (loaded == true)
             {
-                if (settings.games.name.Length > 0)
+                if (settings.games.Count > 0)
                 {
-                    for (int i = 0; i < settings.games.name.Length; i++)
+                    for (int i = 0; i < settings.games.Count; i++)
                     {
-                        games_list.Items.Add(settings.games.name[i]);
+                        if (Directory.Exists($"{settings.games[i].path}") == true)
+                        {
+                            games_list.Items.Add(settings.games[i].name);
+                        }
+                        else
+                        {
+                            boxer($"Game path not found:\n\nName: '{settings.games[i].name}'\nPath: '{settings.games[i].path}'", "game error").Wait();
+                        }
                     }
+                } else
+                {
+                    UILogs("no_game_name_load", null).Wait();
                 }
             }
+            UILogs("games_refreshed", null).Wait();
 
             return (Task.CompletedTask);
         }
+        private Task add_game()
+        {
+            UILogs("games_add", null).Wait();
+            Game_add game = new Game_add();
+            game.ShowDialog();
+            game.Dispose();
+            UILogs("games_added", null).Wait();
 
+            return (Task.CompletedTask);
+        }
+        private Task add_mod()
+        {
+            UILogs("mods_add", null).Wait();
+            Mod_add mod = new Mod_add();
+            mod.ShowDialog();
+            mod.Dispose();
+            UILogs("mods_added", null).Wait();
+
+            return (Task.CompletedTask);
+        }
+        private void game_add_Click(object sender, EventArgs e)
+        {
+            add_game().Wait();
+            load_settings().Wait();
+            load_games().Wait();
+        }
+        private void game_remove_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void mods_add_Click(object sender, EventArgs e)
+        {
+            add_mod().Wait();
+            load_settings().Wait();
+            load_mods().Wait();
+        }
+        private void mods_remove_Click(object sender, EventArgs e)
+        {
+
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
-            UILogs("settings_load", null);
-            load_settings();
-            UILogs("settings_loaded", null);
-
-            UILogs("games_load", null);
-            load_games();
-            UILogs("games_loaded", null);
-
-            UILogs("mods_load", null);
+            load_settings().Wait();
+            load_games().Wait();
             load_mods().Wait();
-            UILogs("mods_loaded", null);
+        }
+
+        private void games_list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

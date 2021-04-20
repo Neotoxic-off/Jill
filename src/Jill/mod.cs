@@ -8,7 +8,6 @@ namespace MOD
 {
     class Mod
     {
-
         public class Rootobject
         {
             public string name { get; set; }
