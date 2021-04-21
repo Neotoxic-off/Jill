@@ -58,7 +58,10 @@ namespace LOGS
                 { "no_mod_name_load", "No mod name to load" },
 
                 { "add_mod_to_game", "Adding mod to game" },
-                { "added_mod_to_game", "Added mod to game" }
+                { "added_mod_to_game", "Added mod to game" },
+
+                { "remove_mod_to_game", "Removing mod to game" },
+                { "removed_mod_to_game", "Removed mod to game" }
             };
 
             return (list[id]);

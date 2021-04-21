@@ -7,31 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using Newtonsoft.Json;
 
 using IDS;
 using SETTINGS;
-using System.IO;
 
 namespace Jill
 {
-    public partial class Add_mod_to_game : Form
+    public partial class Remove_to_game : Form
     {
         Ids ids = new Ids();
         Settings.Rootobject settings = null;
 
-        public Add_mod_to_game()
+        public Remove_to_game()
         {
             InitializeComponent();
         }
 
-        private void cancel_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void Add_mod_to_game_Load(object sender, EventArgs e)
+        private void Remove_to_game_Load(object sender, EventArgs e)
         {
             string path = $"{ids.ids("settings")}\\{ids.ids("configuration")}";
             settings = JsonConvert.DeserializeObject<Settings.Rootobject>(File.ReadAllText(path));
@@ -40,29 +35,43 @@ namespace Jill
             {
                 game_name.Items.Add(settings.games[i].name);
             }
-            for (int i = 0; i < settings.mods.Count; i++)
-            {
-                mods_list.Items.Add(settings.mods[i].name);
-            }
-
             game_name.SelectedIndex = 0;
+        }
+
+        private void game_name_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mods_list.Items.Clear();
+
+            for (int i = 0; i < settings.games[game_name.SelectedIndex].mods.Count; i++)
+            {
+                mods_list.Items.Add(settings.games[game_name.SelectedIndex].mods[i]);
+            }
         }
 
         private void apply_Click(object sender, EventArgs e)
         {
             string path = $"{ids.ids("settings")}\\{ids.ids("configuration")}";
 
-            for (int i = 0; i < mods_list.CheckedItems.Count; i++)
+            for (int mods = 0; mods < settings.games[game_name.SelectedIndex].mods.Count; mods++)
             {
-                settings.games[game_name.SelectedIndex].mods.Add(mods_list.CheckedItems[i].ToString());
+                for (int i = 0; i < mods_list.CheckedItems.Count; i++)
+                {
+                    if (settings.games[game_name.SelectedIndex].mods[mods] == mods_list.CheckedItems[i])
+                        settings.games[game_name.SelectedIndex].mods.RemoveAt(mods);
+                }
             }
-
+            
             if (File.Exists(path) == true)
                 File.Delete(path);
             File.WriteAllText(path, JsonConvert.SerializeObject(settings));
+
             Close();
-            
             return;
+        }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void check_all_Click(object sender, EventArgs e)

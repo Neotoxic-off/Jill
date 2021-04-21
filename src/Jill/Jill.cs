@@ -43,7 +43,6 @@ namespace Jill
 
             return (Task.CompletedTask);
         }
-
         private Task boxer(string content, string type)
         {
             if (type == "error")
@@ -107,15 +106,6 @@ namespace Jill
 
             return (Task.CompletedTask);
         }
-        private string is_checked(int index)
-        {
-            for (int i = 0; i < mods_list.CheckedItems.Count; i++)
-            {
-                if (mods_list.CheckedItems[i] == mods_list.Items[index])
-                    return ("Selected");
-            }
-            return ("Not Selected");
-        }
         private Task load_modinfos(string path)
         {
             string full_path = $"{path}\\{ids.ids("modinfo")}";
@@ -123,36 +113,32 @@ namespace Jill
 
             infos.Items.Clear();
 
-            if (mods_list.SelectedIndex > -1)
+            if (File.Exists(full_path) == true)
             {
-                if (File.Exists(full_path) == true)
-                {
-                    UILogs("ini_load", full_path).Wait();
-                    FileIniDataParser parser = new FileIniDataParser();
-                    IniData data = parser.ReadFile(full_path);
-                    UILogs("ini_loaded", full_path).Wait();
+                UILogs("ini_load", full_path).Wait();
+                FileIniDataParser parser = new FileIniDataParser();
+                IniData data = parser.ReadFile(full_path);
+                UILogs("ini_loaded", full_path).Wait();
 
-                    UILogs("infos_load", path).Wait();
+                UILogs("infos_load", path).Wait();
 
-                    mod.name = data.GetKey("name");
-                    mod.version = data.GetKey("version");
-                    mod.description = data.GetKey("description");
-                    mod.category = data.GetKey("category");
-                    mod.screenshot = data.GetKey("screenshot");
-                    mod.author = data.GetKey("author");
+                mod.name = data.GetKey("name");
+                mod.version = data.GetKey("version");
+                mod.description = data.GetKey("description");
+                mod.category = data.GetKey("category");
+                mod.screenshot = data.GetKey("screenshot");
+                mod.author = data.GetKey("author");
 
-                    add_value(mod.name, "Name").Wait();
-                    add_value(mod.version, "Version").Wait();
-                    add_value(mod.description, "Description").Wait();
-                    add_value(mod.category, "Category").Wait();
-                    add_value($"{path}\\{mod.screenshot}", "Preview").Wait();
-                    add_value(mod.author, "Author").Wait();
+                add_value(mod.name, "Name").Wait();
+                add_value(mod.version, "Version").Wait();
+                add_value(mod.description, "Description").Wait();
+                add_value(mod.category, "Category").Wait();
+                add_value($"{path}\\{mod.screenshot}", "Preview").Wait();
+                add_value(mod.author, "Author").Wait();
 
-                    add_value($"{is_checked(mods_list.SelectedIndex)}", "Status");
-                    UILogs("infos_loaded", path).Wait();
-                } else
-                    add_value("No mod information to load", "Mod's informations").Wait();
-            }
+                UILogs("infos_loaded", path).Wait();
+            } else
+                add_value("No mod information to load", "Mod's informations").Wait();
             
             return (Task.CompletedTask);
         }
@@ -201,29 +187,6 @@ namespace Jill
             infos.Items.Add(listViewItem);
 
             return (Task.CompletedTask);
-        }
-        private void mods_list_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (mods_list.SelectedIndex > -1)
-                load_modinfos($"{settings.mods[mods_list.SelectedIndex].path}");
-        }
-        private void check_all_Click(object sender, EventArgs e)
-        {
-            UILogs("check_all_load", null).Wait();
-            for (int i = 0; i < mods_list.Items.Count; i++)
-            {
-                mods_list.SetItemChecked(i, true);
-            }
-            UILogs("check_all_loaded", null).Wait();
-        }
-        private void uncheck_all_Click(object sender, EventArgs e)
-        {
-            UILogs("uncheck_all_load", null).Wait();
-            for (int i = 0; i < mods_list.Items.Count; i++)
-            {
-                mods_list.SetItemChecked(i, false);
-            }
-            UILogs("uncheck_all_loaded", null).Wait();
         }
         private Task load_settings()
         {
@@ -322,16 +285,20 @@ namespace Jill
         private Task add_mod_to_game()
         {
             UILogs("add_mod_to_game", null).Wait();
-            if (mods_list.CheckedItems.Count > 0)
-            {
-                Add_mod_to_game add_mod_to_game = new Add_mod_to_game(mods_list.CheckedItems);
-                add_mod_to_game.ShowDialog();
-                add_mod_to_game.Dispose();
-            } else
-            {
-                boxer("First select at least 1 mod to add to a game", "mod error").Wait();
-            }
+            Add_mod_to_game add_mod_to_game = new Add_mod_to_game();
+            add_mod_to_game.ShowDialog();
+            add_mod_to_game.Dispose();
             UILogs("added_mod_to_game", null).Wait();
+
+            return (Task.CompletedTask);
+        }
+        private Task remove_mod_to_game()
+        {
+            UILogs("remove_mod_to_game", null).Wait();
+            Remove_to_game remove_mod_to_game = new Remove_to_game();
+            remove_mod_to_game.ShowDialog();
+            remove_mod_to_game.Dispose();
+            UILogs("removed_mod_to_game", null).Wait();
 
             return (Task.CompletedTask);
         }
@@ -377,10 +344,27 @@ namespace Jill
             load_settings().Wait();
             load_games().Wait();
         }
+        private void mods_list_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (mods_list.SelectedIndex > -1)
+            {
+                preview.Enabled = true;
+                load_modinfos($"{settings.mods[mods_list.SelectedIndex].path}");
+            } else
+            {
+                preview.Enabled = false;
+            }
+        }
         private void games_list_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (games_list.SelectedIndex > -1)
                 load_gameinfos().Wait();
+        }
+        private void remove_to_game_Click(object sender, EventArgs e)
+        {
+            remove_mod_to_game().Wait();
+            load_settings().Wait();
+            load_games().Wait();
         }
         private void Form1_Load(object sender, EventArgs e)
         {

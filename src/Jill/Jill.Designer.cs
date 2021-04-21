@@ -40,16 +40,14 @@ namespace Jill
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.mods_installed = new System.Windows.Forms.TabPage();
-            this.mods_list = new System.Windows.Forms.CheckedListBox();
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.check_all = new System.Windows.Forms.Button();
-            this.uncheck_all = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
             this.mods_remove = new System.Windows.Forms.Button();
             this.mods_add = new System.Windows.Forms.Button();
             this.Games = new System.Windows.Forms.TabPage();
+            this.games_list = new System.Windows.Forms.ListBox();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -70,7 +68,8 @@ namespace Jill
             this.button1 = new System.Windows.Forms.Button();
             this.Log = new System.Windows.Forms.TabPage();
             this.log_value = new System.Windows.Forms.RichTextBox();
-            this.games_list = new System.Windows.Forms.ListBox();
+            this.remove_to_game = new System.Windows.Forms.Button();
+            this.mods_list = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -83,6 +82,7 @@ namespace Jill
             this.panel11.SuspendLayout();
             this.Games.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.About.SuspendLayout();
@@ -135,7 +135,7 @@ namespace Jill
             this.logs_time.CheckOnClick = true;
             this.logs_time.CheckState = System.Windows.Forms.CheckState.Checked;
             this.logs_time.Name = "logs_time";
-            this.logs_time.Size = new System.Drawing.Size(100, 22);
+            this.logs_time.Size = new System.Drawing.Size(180, 22);
             this.logs_time.Text = "Time";
             // 
             // aboutToolStripMenuItem
@@ -194,17 +194,6 @@ namespace Jill
             this.mods_installed.Text = "Mods";
             this.mods_installed.UseVisualStyleBackColor = true;
             // 
-            // mods_list
-            // 
-            this.mods_list.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.mods_list.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mods_list.FormattingEnabled = true;
-            this.mods_list.Location = new System.Drawing.Point(3, 3);
-            this.mods_list.Name = "mods_list";
-            this.mods_list.Size = new System.Drawing.Size(554, 598);
-            this.mods_list.TabIndex = 9;
-            this.mods_list.SelectedIndexChanged += new System.EventHandler(this.mods_list_SelectedIndexChanged_1);
-            // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.SystemColors.AppWorkspace;
@@ -226,37 +215,15 @@ namespace Jill
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.check_all);
-            this.panel10.Controls.Add(this.uncheck_all);
+            this.panel10.Controls.Add(this.mods_remove);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel10.Location = new System.Drawing.Point(0, 0);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(213, 34);
             this.panel10.TabIndex = 7;
             // 
-            // check_all
-            // 
-            this.check_all.Location = new System.Drawing.Point(5, 6);
-            this.check_all.Name = "check_all";
-            this.check_all.Size = new System.Drawing.Size(98, 23);
-            this.check_all.TabIndex = 1;
-            this.check_all.Text = "Check all";
-            this.check_all.UseVisualStyleBackColor = true;
-            this.check_all.Click += new System.EventHandler(this.check_all_Click);
-            // 
-            // uncheck_all
-            // 
-            this.uncheck_all.Location = new System.Drawing.Point(109, 6);
-            this.uncheck_all.Name = "uncheck_all";
-            this.uncheck_all.Size = new System.Drawing.Size(98, 23);
-            this.uncheck_all.TabIndex = 2;
-            this.uncheck_all.Text = "Uncheck all";
-            this.uncheck_all.UseVisualStyleBackColor = true;
-            this.uncheck_all.Click += new System.EventHandler(this.uncheck_all_Click);
-            // 
             // panel11
             // 
-            this.panel11.Controls.Add(this.mods_remove);
             this.panel11.Controls.Add(this.mods_add);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel11.Location = new System.Drawing.Point(343, 0);
@@ -266,7 +233,7 @@ namespace Jill
             // 
             // mods_remove
             // 
-            this.mods_remove.Location = new System.Drawing.Point(3, 6);
+            this.mods_remove.Location = new System.Drawing.Point(5, 6);
             this.mods_remove.Name = "mods_remove";
             this.mods_remove.Size = new System.Drawing.Size(98, 23);
             this.mods_remove.TabIndex = 1;
@@ -297,6 +264,17 @@ namespace Jill
             this.Games.TabIndex = 1;
             this.Games.Text = "Games";
             // 
+            // games_list
+            // 
+            this.games_list.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.games_list.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.games_list.FormattingEnabled = true;
+            this.games_list.Location = new System.Drawing.Point(3, 3);
+            this.games_list.Name = "games_list";
+            this.games_list.Size = new System.Drawing.Size(554, 598);
+            this.games_list.TabIndex = 8;
+            this.games_list.SelectedIndexChanged += new System.EventHandler(this.games_list_SelectedIndexChanged_1);
+            // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.SystemColors.AppWorkspace;
@@ -318,6 +296,7 @@ namespace Jill
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.game_remove);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Name = "panel6";
@@ -327,7 +306,6 @@ namespace Jill
             // panel7
             // 
             this.panel7.Controls.Add(this.game_add);
-            this.panel7.Controls.Add(this.game_remove);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel7.Location = new System.Drawing.Point(343, 0);
             this.panel7.Name = "panel7";
@@ -346,7 +324,7 @@ namespace Jill
             // 
             // game_remove
             // 
-            this.game_remove.Location = new System.Drawing.Point(3, 6);
+            this.game_remove.Location = new System.Drawing.Point(5, 6);
             this.game_remove.Name = "game_remove";
             this.game_remove.Size = new System.Drawing.Size(98, 23);
             this.game_remove.TabIndex = 1;
@@ -425,12 +403,12 @@ namespace Jill
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.remove_to_game);
             this.panel4.Controls.Add(this.add_to_game);
-            this.panel4.Controls.Add(this.preview);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(212, 38);
+            this.panel4.Size = new System.Drawing.Size(213, 38);
             this.panel4.TabIndex = 7;
             // 
             // add_to_game
@@ -446,7 +424,7 @@ namespace Jill
             // preview
             // 
             this.preview.Enabled = false;
-            this.preview.Location = new System.Drawing.Point(107, 7);
+            this.preview.Location = new System.Drawing.Point(52, 7);
             this.preview.Name = "preview";
             this.preview.Size = new System.Drawing.Size(98, 23);
             this.preview.TabIndex = 1;
@@ -457,15 +435,16 @@ namespace Jill
             // panel3
             // 
             this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.preview);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(399, 0);
+            this.panel3.Location = new System.Drawing.Point(267, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(130, 38);
+            this.panel3.Size = new System.Drawing.Size(262, 38);
             this.panel3.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(24, 7);
+            this.button1.Location = new System.Drawing.Point(156, 7);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(98, 23);
             this.button1.TabIndex = 2;
@@ -494,16 +473,26 @@ namespace Jill
             this.log_value.TabIndex = 0;
             this.log_value.Text = "";
             // 
-            // games_list
+            // remove_to_game
             // 
-            this.games_list.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.games_list.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.games_list.FormattingEnabled = true;
-            this.games_list.Location = new System.Drawing.Point(3, 3);
-            this.games_list.Name = "games_list";
-            this.games_list.Size = new System.Drawing.Size(554, 598);
-            this.games_list.TabIndex = 8;
-            this.games_list.SelectedIndexChanged += new System.EventHandler(this.games_list_SelectedIndexChanged_1);
+            this.remove_to_game.Location = new System.Drawing.Point(107, 7);
+            this.remove_to_game.Name = "remove_to_game";
+            this.remove_to_game.Size = new System.Drawing.Size(98, 23);
+            this.remove_to_game.TabIndex = 2;
+            this.remove_to_game.Text = "Remove mod(s)";
+            this.remove_to_game.UseVisualStyleBackColor = true;
+            this.remove_to_game.Click += new System.EventHandler(this.remove_to_game_Click);
+            // 
+            // mods_list
+            // 
+            this.mods_list.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.mods_list.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mods_list.FormattingEnabled = true;
+            this.mods_list.Location = new System.Drawing.Point(3, 3);
+            this.mods_list.Name = "mods_list";
+            this.mods_list.Size = new System.Drawing.Size(554, 598);
+            this.mods_list.TabIndex = 9;
+            this.mods_list.SelectedIndexChanged += new System.EventHandler(this.mods_list_SelectedIndexChanged_1);
             // 
             // Jill
             // 
@@ -531,6 +520,7 @@ namespace Jill
             this.panel11.ResumeLayout(false);
             this.Games.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.About.ResumeLayout(false);
@@ -556,8 +546,6 @@ namespace Jill
         private System.Windows.Forms.TabPage About;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button add_to_game;
-        private System.Windows.Forms.Button uncheck_all;
-        private System.Windows.Forms.Button check_all;
         private System.Windows.Forms.ListView infos;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
@@ -578,7 +566,6 @@ namespace Jill
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Button mods_add;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.CheckedListBox mods_list;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem versionToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader Informations;
@@ -586,6 +573,8 @@ namespace Jill
         private System.Windows.Forms.ColumnHeader Value;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox games_list;
+        private System.Windows.Forms.Button remove_to_game;
+        private System.Windows.Forms.ListBox mods_list;
     }
 }
 
