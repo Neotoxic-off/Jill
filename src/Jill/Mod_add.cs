@@ -72,5 +72,10 @@ namespace Jill
         {
             Close();
         }
+
+        private void Mod_add_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

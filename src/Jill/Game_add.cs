@@ -65,5 +65,10 @@ namespace Jill
         {
             Close();
         }
+
+        private void Game_add_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

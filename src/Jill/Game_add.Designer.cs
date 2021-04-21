@@ -48,14 +48,14 @@ namespace Jill
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(305, 134);
+            this.groupBox1.Size = new System.Drawing.Size(305, 121);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = " Add Game ";
+            this.groupBox1.Text = " Import Game ";
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(143, 105);
+            this.cancel.Location = new System.Drawing.Point(143, 88);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 6;
@@ -65,7 +65,7 @@ namespace Jill
             // 
             // apply
             // 
-            this.apply.Location = new System.Drawing.Point(224, 105);
+            this.apply.Location = new System.Drawing.Point(224, 88);
             this.apply.Name = "apply";
             this.apply.Size = new System.Drawing.Size(75, 23);
             this.apply.TabIndex = 5;
@@ -108,14 +108,16 @@ namespace Jill
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(330, 158);
+            this.ClientSize = new System.Drawing.Size(330, 144);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Game_add";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Add Game";
+            this.Text = "Import Game";
+            this.Load += new System.EventHandler(this.Game_add_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

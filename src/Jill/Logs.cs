@@ -37,19 +37,28 @@ namespace LOGS
                 { "games_loaded", "Games loaded" },
                 { "games_add", "Game adding" },
                 { "games_added", "Game added" },
+                { "games_remove", "Game removing" },
+                { "games_removed", "Game removed" },
                 { "games_refresh", "Games refreshing" },
                 { "games_refreshed", "Games refreshed" },
 
-                { "mods_add", "Mods adding" },
-                { "mods_added", "Mods added" },
+                { "mods_add", "Mod adding" },
+                { "mods_added", "Mod added" },
+                { "mods_remove", "Mod removing" },
+                { "mods_removed", "Mod removed" },
                 { "mods_refresh", "Mods refreshing" },
                 { "mods_refreshed", "Mods refreshed" },
 
                 { "no_game_path_load", "No game path to load" },
                 { "no_game_name_load", "No game name to load" },
+                { "game_path_not_found", "Game path not found" },
+                { "mod_path_not_found", "Mod path not found" },
 
                 { "no_mod_path_load", "No mod path to load" },
-                { "no_mod_name_load", "No mod name to load" }
+                { "no_mod_name_load", "No mod name to load" },
+
+                { "add_mod_to_game", "Adding mod to game" },
+                { "added_mod_to_game", "Added mod to game" }
             };
 
             return (list[id]);

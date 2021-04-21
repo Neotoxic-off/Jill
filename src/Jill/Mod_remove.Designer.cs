@@ -1,7 +1,7 @@
 ﻿
 namespace Jill
 {
-    partial class Mod_add
+    partial class Mod_remove
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,12 @@ namespace Jill
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mod_add));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mod_remove));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cancel = new System.Windows.Forms.Button();
             this.apply = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.browse = new System.Windows.Forms.Button();
-            this.mod_name = new System.Windows.Forms.TextBox();
-            this.mod_path = new System.Windows.Forms.FolderBrowserDialog();
+            this.mods_list = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -48,14 +46,14 @@ namespace Jill
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(305, 121);
-            this.groupBox1.TabIndex = 2;
+            this.groupBox1.Size = new System.Drawing.Size(305, 134);
+            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = " Import Mod ";
+            this.groupBox1.Text = " Remove Mod ";
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(143, 88);
+            this.cancel.Location = new System.Drawing.Point(143, 105);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 6;
@@ -65,18 +63,17 @@ namespace Jill
             // 
             // apply
             // 
-            this.apply.Location = new System.Drawing.Point(224, 88);
+            this.apply.Location = new System.Drawing.Point(224, 105);
             this.apply.Name = "apply";
             this.apply.Size = new System.Drawing.Size(75, 23);
             this.apply.TabIndex = 5;
-            this.apply.Text = "Apply";
+            this.apply.Text = "Remove";
             this.apply.UseVisualStyleBackColor = true;
             this.apply.Click += new System.EventHandler(this.apply_Click);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.browse);
-            this.groupBox3.Controls.Add(this.mod_name);
+            this.groupBox3.Controls.Add(this.mods_list);
             this.groupBox3.Location = new System.Drawing.Point(6, 19);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(293, 63);
@@ -84,43 +81,33 @@ namespace Jill
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = " Name ";
             // 
-            // browse
+            // mods_list
             // 
-            this.browse.Location = new System.Drawing.Point(212, 23);
-            this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(75, 23);
-            this.browse.TabIndex = 1;
-            this.browse.Text = "Browse";
-            this.browse.UseVisualStyleBackColor = true;
-            this.browse.Click += new System.EventHandler(this.browse_Click);
+            this.mods_list.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mods_list.FormattingEnabled = true;
+            this.mods_list.Location = new System.Drawing.Point(13, 26);
+            this.mods_list.Margin = new System.Windows.Forms.Padding(10);
+            this.mods_list.Name = "mods_list";
+            this.mods_list.Size = new System.Drawing.Size(267, 21);
+            this.mods_list.TabIndex = 0;
             // 
-            // mod_name
-            // 
-            this.mod_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mod_name.Location = new System.Drawing.Point(13, 26);
-            this.mod_name.Margin = new System.Windows.Forms.Padding(10);
-            this.mod_name.Name = "mod_name";
-            this.mod_name.Size = new System.Drawing.Size(186, 20);
-            this.mod_name.TabIndex = 0;
-            // 
-            // Mod_add
+            // Mod_remove
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(330, 144);
+            this.ClientSize = new System.Drawing.Size(330, 156);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Mod_add";
+            this.Name = "Mod_remove";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Import Mod";
-            this.Load += new System.EventHandler(this.Mod_add_Load);
+            this.Text = "Remove Mod";
+            this.Load += new System.EventHandler(this.Mod_remove_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -130,9 +117,7 @@ namespace Jill
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button cancel;
         private System.Windows.Forms.Button apply;
-        private System.Windows.Forms.TextBox mod_name;
-        private System.Windows.Forms.Button browse;
-        private System.Windows.Forms.FolderBrowserDialog mod_path;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox mods_list;
     }
 }

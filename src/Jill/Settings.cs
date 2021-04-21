@@ -19,11 +19,13 @@ namespace SETTINGS
         {
             public string name { get; set; }
             public string path { get; set; }
+            public List<string> mods { get; set; }
 
             public Game(string name, string path)
             {
                 this.name = name;
                 this.path = path;
+                this.mods = new List<string>();
             }
         }
 

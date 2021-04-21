@@ -50,8 +50,10 @@ namespace Jill
             this.ClientSize = new System.Drawing.Size(624, 321);
             this.Controls.Add(this.render);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimizeBox = false;
             this.Name = "Preview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Preview";
             this.Load += new System.EventHandler(this.Preview_Load);
             ((System.ComponentModel.ISupportInitialize)(this.render)).EndInit();
             this.ResumeLayout(false);
