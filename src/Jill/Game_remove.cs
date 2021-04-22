@@ -63,7 +63,8 @@ namespace Jill
                     settings = JsonConvert.DeserializeObject<Settings.Rootobject>(File.ReadAllText($"{ids.ids("settings")}\\{ids.ids("configuration")}"));
                     for (int i = 0; i < settings.games.Count; i++)
                         game_list.Items.Add(settings.games[i].name);
-                    game_list.SelectedIndex = 0;
+                    if (game_list.Items.Count > 0)
+                        game_list.SelectedIndex = 0;
                 }
                 else
                 {

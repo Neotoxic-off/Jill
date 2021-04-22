@@ -37,18 +37,34 @@ namespace Jill
 
         private void apply_Click(object sender, EventArgs e)
         {
+            bool valid = true;
+
             if (game_path.SelectedPath.Length >= 1)
             {
                 if (Directory.Exists(game_path.SelectedPath) == true)
                 {
                     string path = $"{ids.ids("settings")}\\{ids.ids("configuration")}";
                     settings = JsonConvert.DeserializeObject<Settings.Rootobject>(File.ReadAllText(path));
-                    settings.games.Add(new Settings.Game(game_name.Text, game_path.SelectedPath));
+                    
+                    for (int i = 0; i < settings.games.Count; i++)
+                    {
+                        if (settings.games[i].name == game_name.Text || settings.games[i].path == game_path.SelectedPath)
+                        {
+                            MessageBox.Show("Game already added", "fail to add new game", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            valid = false;
+                        }
+                    }
+                    
+                    if (valid == true)
+                    {
+                        settings.games.Add(new Settings.Game(game_name.Text, game_path.SelectedPath));
 
-                    if (File.Exists(path) == true)
-                        File.Delete(path);
-                    File.WriteAllText(path, JsonConvert.SerializeObject(settings));
-                    Close();
+                        if (File.Exists(path) == true)
+                            File.Delete(path);
+                        File.WriteAllText(path, JsonConvert.SerializeObject(settings));
+                        Close();
+                    }
+                    
                     return;
                 }
                 MessageBox.Show("Game path not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

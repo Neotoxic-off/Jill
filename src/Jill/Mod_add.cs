@@ -38,18 +38,34 @@ namespace Jill
 
         private void apply_Click(object sender, EventArgs e)
         {
+            bool valid = true;
+
             if (mod_path.SelectedPath.Length >= 1)
             {
                 if (Directory.Exists(mod_path.SelectedPath) == true)
                 {
                     string path = $"{ids.ids("settings")}\\{ids.ids("configuration")}";
                     settings = JsonConvert.DeserializeObject<Settings.Rootobject>(File.ReadAllText(path));
-                    settings.mods.Add(new Settings.Mods(mod_name.Text, mod_path.SelectedPath));
 
-                    if (File.Exists(path) == true)
-                        File.Delete(path);
-                    File.WriteAllText(path, JsonConvert.SerializeObject(settings));
-                    Close();
+                    for (int i = 0; i < settings.mods.Count; i++)
+                    {
+                        if (settings.mods[i].name == mod_name.Text || settings.mods[i].path == mod_path.SelectedPath)
+                        {
+                            MessageBox.Show("Mod already added", "fail to add new mod", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            valid = false;
+                        }
+                    }
+
+                    if (valid == true)
+                    {
+                        settings.mods.Add(new Settings.Mods(mod_name.Text, mod_path.SelectedPath));
+
+                        if (File.Exists(path) == true)
+                            File.Delete(path);
+                        File.WriteAllText(path, JsonConvert.SerializeObject(settings));
+                        Close();
+                    }
+                    
                     return;
                 }
                 MessageBox.Show("Mod path not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

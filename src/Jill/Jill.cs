@@ -28,6 +28,7 @@ namespace Jill
         {
             InitializeComponent();
         }
+
         private Task UILogs(string value, string path)
         {
             string display = "";
@@ -40,6 +41,7 @@ namespace Jill
                 display += $"{separator}{path}";
 
             log_value.AppendText($"{display}\n");
+            log_value.ScrollToCaret();
 
             return (Task.CompletedTask);
         }
@@ -73,6 +75,7 @@ namespace Jill
 
             return (Task.CompletedTask);
         }
+
         private Task load_mods()
         {
             UILogs("mods_refresh", null).Wait();
@@ -109,8 +112,8 @@ namespace Jill
         private Task load_modinfos(string path)
         {
             string full_path = $"{path}\\{ids.ids("modinfo")}";
-            mod = new Mod.Rootobject();
 
+            mod = new Mod.Rootobject();
             infos.Items.Clear();
 
             if (File.Exists(full_path) == true)
@@ -121,7 +124,6 @@ namespace Jill
                 UILogs("ini_loaded", full_path).Wait();
 
                 UILogs("infos_load", path).Wait();
-
                 mod.name = data.GetKey("name");
                 mod.version = data.GetKey("version");
                 mod.description = data.GetKey("description");
@@ -133,9 +135,8 @@ namespace Jill
                 add_value(mod.version, "Version").Wait();
                 add_value(mod.description, "Description").Wait();
                 add_value(mod.category, "Category").Wait();
-                add_value($"{path}\\{mod.screenshot}", "Preview").Wait();
+                add_value($"{mod.screenshot}", "Preview").Wait();
                 add_value(mod.author, "Author").Wait();
-
                 UILogs("infos_loaded", path).Wait();
             } else
                 add_value("No mod information to load", "Mod's informations").Wait();
@@ -148,12 +149,12 @@ namespace Jill
 
             add_value(settings.games[games_list.SelectedIndex].name, "Name").Wait();
             add_value(settings.games[games_list.SelectedIndex].path, "Path").Wait();
-            add_value("", "").Wait();
 
             for (int i = 0; i < settings.games[games_list.SelectedIndex].mods.Count; i++)
             {
                 if (i == 0)
                 {
+                    add_value("", "").Wait();
                     add_value(settings.games[games_list.SelectedIndex].mods[i], "Mods").Wait();
                 } else
                 {
@@ -302,6 +303,7 @@ namespace Jill
 
             return (Task.CompletedTask);
         }
+        
         private void game_add_Click(object sender, EventArgs e)
         {
             add_game().Wait();
@@ -325,7 +327,19 @@ namespace Jill
             remove_mod().Wait();
             load_settings().Wait();
             load_mods().Wait();
-        } 
+        }
+        private void add_to_game_Click_1(object sender, EventArgs e)
+        {
+            add_mod_to_game().Wait();
+            load_settings().Wait();
+            load_games().Wait();
+        }
+        private void remove_to_game_Click_1(object sender, EventArgs e)
+        {
+            remove_mod_to_game().Wait();
+            load_settings().Wait();
+            load_games().Wait();
+        }
         private void versionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             boxer($"Version: {settings.version}\n", "informations").Wait();
@@ -337,12 +351,6 @@ namespace Jill
             preview.ShowDialog();
             preview.Dispose();
             UILogs("preview_loaded", null);
-        }
-        private void add_to_game_Click(object sender, EventArgs e)
-        {
-            add_mod_to_game().Wait();
-            load_settings().Wait();
-            load_games().Wait();
         }
         private void mods_list_SelectedIndexChanged_1(object sender, EventArgs e)
         {
@@ -360,19 +368,20 @@ namespace Jill
             if (games_list.SelectedIndex > -1)
                 load_gameinfos().Wait();
         }
-        private void remove_to_game_Click(object sender, EventArgs e)
-        {
-            remove_mod_to_game().Wait();
-            load_settings().Wait();
-            load_games().Wait();
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
             load_settings().Wait();
             load_games().Wait();
             load_mods().Wait();
+
             if (errors == true)
                 boxer("You have some game / mods not loaded due to path not found for more informations check the 'logs'", "missing path").Wait();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UILogs("mods_install", null).Wait();
+            UILogs("mods_installed", null).Wait();
         }
     }
 }

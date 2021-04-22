@@ -61,7 +61,10 @@ namespace LOGS
                 { "added_mod_to_game", "Added mod to game" },
 
                 { "remove_mod_to_game", "Removing mod to game" },
-                { "removed_mod_to_game", "Removed mod to game" }
+                { "removed_mod_to_game", "Removed mod to game" },
+
+                { "mods_install", "Mods installing" },
+                { "mods_installed", "Mods installed" }
             };
 
             return (list[id]);
